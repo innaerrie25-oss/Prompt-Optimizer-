@@ -37,9 +37,9 @@ Rules:
 - Match the language used by the user.
 - Output ONLY the 5-part engineered prompt. Do not add conversational intro/outro comments.`;
 
-    // UPDATE: Using the universal 'gemini-pro' model to bypass model-specific quota limits
+    // UPDATE: Using gemini-1.5-flash which is the standard, fully supported free-tier model
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${cleanApiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${cleanApiKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
