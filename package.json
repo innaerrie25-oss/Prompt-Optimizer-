@@ -1,6 +1,6 @@
 {
   "name": "prompt-optimizer",
-  "version": "0.1.0",
+  "version": "14.2.21",
   "private": true,
   "scripts": {
     "dev": "next dev",
