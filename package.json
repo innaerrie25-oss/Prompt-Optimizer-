@@ -13,13 +13,3 @@
     "react-dom": "^18"
   }
 }
-npm install framer-motion lucide-react canvas-confetti
-git status
-git add .
-git commit -m "feat: cosmic universe theme, starfield background, and custom state animations"
-git push
-git init
-git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPO-NAME.git
-git add .
-git commit -m "feat: universe UI update"
-git push -u origin main --force
