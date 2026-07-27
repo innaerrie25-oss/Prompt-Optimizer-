@@ -13,3 +13,4 @@
     "react-dom": "^18"
   }
 }
+npm install framer-motion lucide-react canvas-confetti
