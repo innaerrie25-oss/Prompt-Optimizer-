@@ -37,8 +37,9 @@ Rules:
 - Match the language used by the user.
 - Output ONLY the 5-part engineered prompt. Do not add conversational intro/outro comments.`;
 
+    // UPDATE: Using the correct, publicly available gemini-2.0-flash model
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${cleanApiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${cleanApiKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
