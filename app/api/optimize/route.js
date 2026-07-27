@@ -13,6 +13,9 @@ export async function POST(req) {
       return NextResponse.json({ error: "API Key is missing from Vercel." }, { status: 500 });
     }
 
+    // This removes any accidental invisible spaces from your key
+    const cleanApiKey = apiKey.trim();
+
     const systemInstruction = `You are a world-class Expert Prompt Engineer. The user will provide a simple, vague, or poorly written prompt in any language. Your task is to deeply analyze their intent and rewrite their request into a highly optimized, single-shot prompt using the exact 5-part structure:
 
 ### Act as:
@@ -34,6 +37,37 @@ Rules:
 - Output the final engineered prompt clearly formatted in Markdown.
 - Match the language used by the user.
 - Output ONLY the 5-part engineered prompt. Do not add conversational intro/outro comments.`;
+
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${cleanApiKey}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [
+            {
+              role: "user",
+              parts: [{ text: `${systemInstruction}\n\nUser Input Prompt: "${prompt}"` }]
+            }
+          ]
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    // If Google rejects the request, this forces the exact error to show on your website
+    if (!response.ok) {
+      return NextResponse.json({ error: "Google says: " + (data.error?.message || "Unknown error") }, { status: 400 });
+    }
+
+    const outputText = data.candidates?.[0]?.content?.parts?.[0]?.text || "Unable to generate prompt.";
+
+    return NextResponse.json({ result: outputText });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
